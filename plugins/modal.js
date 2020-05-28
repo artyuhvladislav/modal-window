@@ -26,8 +26,12 @@ function _createModal(options) {
 $.modal = function (options) {
     const $modal = _createModal();
     return {
-        open() { },
-        close() { },
+        open() { 
+            $modal.classList.add('open');
+        },
+        close() {
+            $modal.classList.remove('open')
+         },
         destroy() { }
     }
 }
