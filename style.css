@@ -15,6 +15,10 @@ h1 {
 }
 
 /* modal styles */
+.modal {
+    opacity: 0;
+    z-index: -1;
+}
 .modal-overlay {
     position: fixed;
     top: 0;
