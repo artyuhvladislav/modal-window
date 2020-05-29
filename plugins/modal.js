@@ -25,13 +25,21 @@ function _createModal(options) {
 }
 $.modal = function (options) {
     const $modal = _createModal();
+    const ANIMATION_SPEED = 200;
+    let closing = false;
     return {
-        open() { 
-            $modal.classList.add('open');
+        open() {
+            !closing && $modal.classList.add('open');
         },
         close() {
-            $modal.classList.remove('open')
-         },
+            closing = true
+            $modal.classList.remove('open');
+            $modal.classList.add('hide');
+            setTimeout(() => {
+                closing = false
+                $modal.classList.remove('hide')
+            }, ANIMATION_SPEED);
+        },
         destroy() { }
     }
 }
