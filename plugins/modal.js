@@ -3,11 +3,11 @@ function _createModal(options) {
     const modal = document.createElement('div');
     modal.classList.add('modal');
     modal.insertAdjacentHTML('afterbegin', `
-    <div class="modal-overlay">
+    <div class="modal-overlay" data-close="true">
         <div class="modal-window" style="width: ${options.width || DEFAULT_WIDTH}">
             <div class="modal-header">
                 <span class="modal-title">${options.title}</span>
-                ${ (options.closable) ? '<span class="modal-close">&times;</span>' : ''}
+                ${ (options.closable) ? '<span class="modal-close" data-close="true">&times;</span>' : ''}
             </div>
             <div class="modal-body">
                 <p>${options.content || 'window'}</p>
@@ -26,7 +26,7 @@ $.modal = function (options) {
     const $modal = _createModal(options);
     const ANIMATION_SPEED = 200;
     let closing = false;
-    return {
+    const modal = {
         $modal,
         open() {
             !closing && $modal.classList.add('open');
@@ -42,4 +42,10 @@ $.modal = function (options) {
         },
         destroy() { }
     }
+    $modal.addEventListener('click', e => {
+        if (e.target.dataset.close) {
+            modal.close();
+        }
+    });
+    return modal
 }
