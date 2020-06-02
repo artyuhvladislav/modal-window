@@ -26,9 +26,12 @@ $.modal = function (options) {
     const $modal = _createModal(options);
     const ANIMATION_SPEED = 200;
     let closing = false;
+    let destroyed = false;
     const modal = {
-        $modal,
         open() {
+            if(destroyed) {
+                return
+            }
             !closing && $modal.classList.add('open');
         },
         close() {
@@ -39,13 +42,22 @@ $.modal = function (options) {
                 closing = false
                 $modal.classList.remove('hide')
             }, ANIMATION_SPEED);
-        },
-        destroy() { }
+        }
     }
-    $modal.addEventListener('click', e => {
+
+    const closingListener = e => {
         if (e.target.dataset.close) {
             modal.close();
         }
-    });
-    return modal
+    }
+
+    $modal.addEventListener('click', closingListener);
+
+    return Object.assign(modal, {
+        destroy() {
+            $modal.parentNode.removeChild($modal);
+            $modal.removeEventListener('click', closingListener);
+            destroyed = true;
+        }
+    })
 }
