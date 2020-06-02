@@ -9,7 +9,7 @@ function _createModal(options) {
                 <span class="modal-title">${options.title}</span>
                 ${ (options.closable) ? '<span class="modal-close" data-close="true">&times;</span>' : ''}
             </div>
-            <div class="modal-body">
+            <div class="modal-body" data-content>
                 <p>${options.content || 'window'}</p>
             </div>
             <div class="modal-footer">
@@ -58,6 +58,9 @@ $.modal = function (options) {
             $modal.parentNode.removeChild($modal);
             $modal.removeEventListener('click', closingListener);
             destroyed = true;
+        },
+        setContent(html) {
+            document.querySelector('[data-content]').innerHTML = html;
         }
     })
 }
