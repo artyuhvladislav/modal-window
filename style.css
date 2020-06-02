@@ -79,3 +79,8 @@ h1 {
 .modal button {
     cursor: pointer;
 }
+.btn {
+    margin-right: 10px;
+    padding: 5px 10px;
+    font-size: 16px;
+}
